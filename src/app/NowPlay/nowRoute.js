@@ -2,7 +2,7 @@ module.exports=function(app){
     const now=require('./nowController');
     
     //0.테스트 API
-    app.get('/app/test',now.getTest);
+    app.get('/app/now/test',now.getTest);
     //1.주목 컨텐츠 API [GET]
     app.get('/app/now/highlight',now.showTopContents);
     //2.전체 컨텐츠 API [GET]

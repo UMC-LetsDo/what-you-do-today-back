@@ -1,5 +1,6 @@
+const nowProvider=require("../../app/NowPlay/nowProvider");
 const { response } = require("express")
-const baseResponseStatus = require("../../../config/baseResponseStatus")
+const baseResponse = require("../../../config/baseResponseStatus")
 
 /*
  * API No. 0
@@ -7,7 +8,7 @@ const baseResponseStatus = require("../../../config/baseResponseStatus")
  * [GET] /nowplay/test
  */
 exports.getTest=async function(req,res){
-    return res.send(response(baseResponseStatus.SUCCESS));
+    return res.send(response(baseResponse.SUCCESS));
 };
 
 /*
@@ -25,7 +26,8 @@ exports.showTopContents=async function(req,res){
  * [GET] /nowplay/contents
  */
 exports.showAllContents=async function(req,res){
-
+    const AllContents=await nowProvider.retrieveContents();
+    return res.send(response(baseResponseStatus.SUCCESS,AllContents));
 };
 
 /*

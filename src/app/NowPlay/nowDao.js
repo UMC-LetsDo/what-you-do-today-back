@@ -27,7 +27,17 @@ async function selectContents(connection){
     const [contentRows]=await connection.query(selectContentsQuery);
     return contentRows;
 }
-
+//contentId 특정 컨텐츠 조회
+async function selectContentsId(connection,contentId){
+    const selectContentsQuery=`
+    SELECT nowcontents_id,title
+    FROM NowContents
+    WHERE nowcontents_id=?;
+    `;
+    const [contentRows]=await connection.query(selectContentsQuery,contentId);
+    return contentRows;
+}
 module.exports={
-    selectContents
+    selectContents,
+    selectContentsId
 };

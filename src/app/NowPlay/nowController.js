@@ -36,7 +36,9 @@ exports.showAllContents=async function(req,res){
  * [GET] /nowplay/contents/:id
  */
 exports.showDetailContents=async function(req,res){
-
+    const contentId=req.params.contentId;
+    const contentByContentId=await nowProvider.retrieveContentsById(contentId);
+    return res.send(response(baseResponse.SUCCESS,contentByContentId));
 };
 
 /*

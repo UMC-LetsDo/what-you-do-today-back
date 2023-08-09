@@ -21,6 +21,6 @@ module.exports = function () {
     require('../src/app/User/userRoute')(app); // route를 express가 읽을 수 있어야 함
     // require('../src/app/Board/boardRoute')(app);
     // require('../src/app/User/testRoute')(app);
-
+    require('../src/app/NowPlay/nowRoute')(app);
     return app;
 };

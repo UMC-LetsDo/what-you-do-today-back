@@ -12,22 +12,22 @@ const {emit} = require("nodemon");
  * API Name : 테스트 API
  * [GET] /app/test
  */
-exports.getTest = async function (req, res) {
-    return res.send(response(baseResponse.SUCCESS));
-}
+// exports.getTest = async function (req, res) {
+//     return res.send(response(baseResponse.SUCCESS))
+// }
 
 /**
  * API No. 1
  * API Name : 유저 생성 (회원가입) API
- * [POST] /app/users
+ * [POST] /signup
  */
 exports.postUsers = async function (req, res) {
-
-    /**
-     * Body: email, password, nickname
+    /*
+    Body : email, password, nickname, age, gender
      */
-    const {email, password, nickname} = req.body;
+    const {email, password, nickname, age, gender} = req.body;
 
+    // email
     // 빈 값 체크
     if (!email)
         return res.send(response(baseResponse.SIGNUP_EMAIL_EMPTY));
@@ -40,22 +40,47 @@ exports.postUsers = async function (req, res) {
     if (!regexEmail.test(email))
         return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
 
-    // 기타 등등 - 추가하기
+    // password // 비밀번호 정규 표현식 써야할까?
+    // 빈 값 체크
+    if (!password)
+        return res.send(response(baseResponse.SIGNUP_PASSWORD_EMPTY));
 
+    // 길이 체크
+    if (password.length < 6 || password.length > 20)
+        return res.send(response(baseResponse.SIGNUP_PASSWORD_LENGTH));
+
+    // nickname
+    // 빈 값 체크
+    if (!nickname)
+        return res.send(response(baseResponse.SIGNUP_NICKNAME_EMPTY));
+
+    // 길이 체크
+    if (nickname.length > 8)
+        return res.send(response(baseResponse.SIGNUP_NICKNAME_LENGTH));
+
+    // age // age 길이 체크해야될까?
+    // 빈 값 체크
+    if (!age)
+        return res.send(response(baseResponse.SIGNUP_AGE_EMPTY));
+
+    // gender는 일단 확인 필요 없어보임 ( 빈 값일 경우가 없음 )
 
     const signUpResponse = await userService.createUser(
         email,
         password,
-        nickname
+        nickname,
+        age,
+        gender,
     );
 
     return res.send(signUpResponse);
-};
+
+}
 
 /**
  * API No. 2
  * API Name : 유저 조회 API (+ 이메일로 검색 조회)
- * [GET] /app/users
+ * [GET] /users
  */
 exports.getUsers = async function (req, res) {
 
@@ -78,7 +103,7 @@ exports.getUsers = async function (req, res) {
 /**
  * API No. 3
  * API Name : 특정 유저 조회 API
- * [GET] /app/users/{userId}
+ * [GET] /user/:userId
  */
 exports.getUserById = async function (req, res) {
 
@@ -90,6 +115,8 @@ exports.getUserById = async function (req, res) {
     if (!userId) return res.send(errResponse(baseResponse.USER_USERID_EMPTY));
 
     const userByUserId = await userProvider.retrieveUser(userId);
+    if (!userByUserId) return res.send(errResponse(baseResponse.USER_USERID_NOT_EXIST));
+
     return res.send(response(baseResponse.SUCCESS, userByUserId));
 };
 
@@ -98,7 +125,7 @@ exports.getUserById = async function (req, res) {
 /**
  * API No. 4
  * API Name : 로그인 API
- * [POST] /app/login
+ * [POST] /login
  * body : email, passsword
  */
 exports.login = async function (req, res) {
@@ -112,48 +139,11 @@ exports.login = async function (req, res) {
     return res.send(signInResponse);
 };
 
-
-/**
- * API No. 5
- * API Name : 회원 정보 수정 API + JWT + Validation
- * [PATCH] /app/users/:userId
- * path variable : userId
- * body : nickname
- */
-exports.patchUsers = async function (req, res) {
-
-    // jwt - userId, path variable :userId
-
-    const userIdFromJWT = req.verifiedToken.userId
-
-    const userId = req.params.userId;
-    const nickname = req.body.nickname;
-
-    if (userIdFromJWT != userId) {
-        res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
-    } else {
-        if (!nickname) return res.send(errResponse(baseResponse.USER_NICKNAME_EMPTY));
-
-        const editUserInfo = await userService.editUser(userId, nickname)
-        return res.send(editUserInfo);
-    }
-};
-
-
-
-
-
-
-
-
-
-
-
 /** JWT 토큰 검증 API
- * [GET] /app/auto-login
+ * [GET] /user-verify
  */
 exports.check = async function (req, res) {
-    const userIdResult = req.verifiedToken.userId;
+    const userIdResult = req.decoded.userId;
     console.log(userIdResult);
     return res.send(response(baseResponse.TOKEN_VERIFICATION_SUCCESS));
 };

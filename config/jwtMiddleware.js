@@ -4,35 +4,30 @@ const { response } = require("./response")
 const { errResponse } = require("./response")
 const baseResponse = require("./baseResponseStatus");
 
-
 const jwtMiddleware = (req, res, next) => {
-    // read the token from header or url
-    const token = req.headers['x-access-token'] || req.query.token;
-    // token does not exist
-    if(!token) {
-        return res.send(errResponse(baseResponse.TOKEN_EMPTY))
-    }
-
-    // create a promise that decodes the token
-    const p = new Promise(
-        (resolve, reject) => {
-            jwt.verify(token, secret_config.jwtsecret , (err, verifiedToken) => {
-                if(err) reject(err);
-                resolve(verifiedToken)
-            })
+    try {
+        const token = req.headers['authorization'] || req.query.token;
+        // token does not exist
+        if(!token) {
+            return res.send(errResponse(baseResponse.TOKEN_EMPTY))
         }
-    );
-
-    // if it has failed to verify, it will return an error message
-    const onError = (error) => {
-        return res.send(errResponse(baseResponse.TOKEN_VERIFICATION_FAILURE))
-    };
-    // process the promise
-    p.then((verifiedToken)=>{
-        //비밀 번호 바뀌었을 때 검증 부분 추가 할 곳
-        req.verifiedToken = verifiedToken;
-        next();
-    }).catch(onError)
+        // 요청 헤더에 저장된 토큰(req.headers.authorization)과 비밀키를 사용하여 토큰을 req.decoded에 반환
+        req.decoded = jwt.verify(token, secret_config.jwtsecret);
+        return next();
+    }
+        // 인증 실패
+    catch (error) {
+        // 유효시간이 초과된 경우
+        if (error.name === 'TokenExpiredError') {
+            console.log(error.name);
+            return res.send(errResponse(baseResponse.TOKEN_VERIFICATION_EXPIRED));
+        }
+        // 토큰의 비밀키가 일치하지 않는 경우
+        if (error.name === 'JsonWebTokenError') {
+            console.log(error.name);
+            return res.send(errResponse(baseResponse.TOKEN_VERIFICATION_FAILURE));
+        }
+    }
 };
 
 module.exports = jwtMiddleware;

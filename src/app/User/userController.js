@@ -19,7 +19,7 @@ const {emit} = require("nodemon");
 /**
  * API No. 1
  * API Name : 유저 생성 (회원가입) API
- * [POST] /app/users
+ * [POST] /signup
  */
 exports.postUsers = async function (req, res) {
     /*
@@ -80,7 +80,7 @@ exports.postUsers = async function (req, res) {
 /**
  * API No. 2
  * API Name : 유저 조회 API (+ 이메일로 검색 조회)
- * [GET] /app/users
+ * [GET] /users
  */
 exports.getUsers = async function (req, res) {
 
@@ -103,7 +103,7 @@ exports.getUsers = async function (req, res) {
 /**
  * API No. 3
  * API Name : 특정 유저 조회 API
- * [GET] /app/users/{userId}
+ * [GET] /user/:userId
  */
 exports.getUserById = async function (req, res) {
 
@@ -125,7 +125,7 @@ exports.getUserById = async function (req, res) {
 /**
  * API No. 4
  * API Name : 로그인 API
- * [POST] /app/login
+ * [POST] /login
  * body : email, passsword
  */
 exports.login = async function (req, res) {
@@ -140,7 +140,7 @@ exports.login = async function (req, res) {
 };
 
 /** JWT 토큰 검증 API
- * [GET] /app/auto-login
+ * [GET] /user-verify
  */
 exports.check = async function (req, res) {
     const userIdResult = req.decoded.userId;

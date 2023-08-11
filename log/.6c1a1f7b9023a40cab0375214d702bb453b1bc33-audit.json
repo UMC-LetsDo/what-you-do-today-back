@@ -9,6 +9,17 @@
             "date": 1690496978829,
             "name": "log/2023-07-27-smart-push.log",
             "hash": "92574d4b12be909e0c613575fd1067a2c21398f3995fa5974a18f297c43c62ef"
+        },
+        {
+<<<<<<< Updated upstream
+            "date": 1691586480730,
+            "name": "log/2023-08-09-smart-push.log",
+            "hash": "cd40b4c5490a93dd360ef9c88c6af81d0a7f15fcf6efac7f1b886756ea6eca0b"
+=======
+            "date": 1691586209481,
+            "name": "log/2023-08-09-smart-push.log",
+            "hash": "c19a404033ecf4459af41dc7e75235899a1adecdb34c1b7d9943072c02745c87"
+>>>>>>> Stashed changes
         }
     ],
     "hashType": "sha256"

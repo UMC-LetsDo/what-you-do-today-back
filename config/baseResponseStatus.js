@@ -5,7 +5,9 @@ module.exports = {
 
     // Common
     TOKEN_EMPTY : { "isSuccess": false, "code": 400, "message":"JWT 토큰을 입력해주세요." },
-    TOKEN_VERIFICATION_FAILURE : { "isSuccess": false, "code": 401, "message":"JWT 토큰 검증 실패" },
+    TOKEN_VERIFICATION_FAILURE : { "isSuccess": false, "code": 401, "message":"유효하지 않은 토큰입니다." },
+    TOKEN_VERIFICATION_EXPIRED : { "isSuccess": false, "code": 401, "message":"JWT 토큰이 만료되었습니다." },
+    TOKEN_VERIFICATION_SUCCESS : { "isSuccess": true, "code": 200, "message":"JWT 토큰 검증 성공" },
 
     //Request error
     SIGNUP_EMAIL_EMPTY : { "isSuccess": false, "code": 400, "message":"이메일을 입력해주세요" },
@@ -15,6 +17,7 @@ module.exports = {
     SIGNUP_PASSWORD_LENGTH : { "isSuccess": false, "code": 400, "message":"비밀번호는 6~20자리를 입력해주세요." },
     SIGNUP_NICKNAME_EMPTY : { "isSuccess": false, "code": 400, "message":"닉네임을 입력 해주세요." },
     SIGNUP_NICKNAME_LENGTH : { "isSuccess": false,"code": 400,"message":"닉네임은 최대 20자리를 입력해주세요." },
+    SIGNUP_AGE_EMPTY : { "isSuccess": false,"code": 400,"message":"나이를 입력 해주세요." },
 
     SIGNIN_EMAIL_EMPTY : { "isSuccess": false, "code": 400, "message":"이메일을 입력해주세요" },
     SIGNIN_EMAIL_LENGTH : { "isSuccess": false, "code": 400, "message":"이메일은 30자리 미만으로 입력해주세요." },
@@ -43,6 +46,6 @@ module.exports = {
     //Connection, Transaction 등의 서버 오류
     DB_ERROR : { "isSuccess": false, "code": 500, "message": "데이터 베이스 에러"},
     SERVER_ERROR : { "isSuccess": false, "code": 500, "message": "서버 에러"},
- 
- 
+
+
 }

@@ -17,6 +17,8 @@ module.exports=function(app){
     //요즘뭐하니2 PART
     //5. 컨텐츠 상세정보 API [GET]
     app.get('/app/now/contents/:contentId',now.showDetailContents);
+    //6. contentId 특정 컨텐츠의 해시태그 API [GET]
+    app.get('app/now/contents/:contentId/hashtag',now.showHashtag)
     //6. 컨텐츠 파티룸 API [GET]
     app.get('/app/now/contents/:contentId/partyrooms',now.showPartyRoom);
 }

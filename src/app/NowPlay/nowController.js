@@ -63,6 +63,17 @@ exports.showDetailContents=async function(req,res){
 
 /*
  * API No. 6
+ * API Name : contentId 특정 컨텐츠의 해시태그 API
+ * [GET] /nowplay/contents/:id/hashtag
+ */
+exports.showHashtag=async function(req,res){
+    const hashtag=req.params.hashtag;
+    const hashBoContentId=await nowProvider.retrieveHashById(hashtag);
+    return res.send(response(baseResponse.SUCCESS,hashBoContentId));
+};
+
+/*
+ * API No. 7
  * API Name : 컨텐츠 파티룸 API
  * [GET] /nowplay/contents/:id/partyrooms
  */

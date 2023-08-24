@@ -73,18 +73,29 @@ async function selectContentsId(connection,contentId){
     const [contentRows]=await connection.query(selectContentsQuery,contentId);
     return contentRows;
 }
+//contentId 특정 컨텐츠의 해시태그 조회
+async function selectContentsHash(connection,contentId){
+    const selectContentsQuery=`
+    SELECT h.hashtag_name
+    FROM nowcontent_hashtag n,hashtag h
+    WHERE n.nowcontents_id=?;
+    `;
+    const [contentRows]=await connection.query(selectContentsQuery,contentId);
+    return contentRows;
+}
+
 //hashtag로 특정 컨텐츠 파티룸 조회: 요즘뭐하니2-파티룸 부분
 //연결 2개 필요
 //Nowcontent-nowcontent_hashtag
 //nowcontent_hashtag-used_hashtag
-async function selectParty(connection,nowcontents_id){
+async function selectParty(connection,contentId){
     const selectContentsQuery=`
     SELECT partyroom_id
     FROM NowContents n, nowcontent_hashtag h, used_hashtag p
     ON n.nowcontents_id=h.nowcontents_id and h.hashtag_id=p.hashtag_id
     WHRER n.nowcontents_id=?
     `;
-    const [contentRows]=await connection.query(selectContentsQuery,nowcontents_id);
+    const [contentRows]=await connection.query(selectContentsQuery,contentId);
     return contentRows;
 }
 module.exports={
@@ -93,5 +104,6 @@ module.exports={
     selectContentsCategory,
     selectContentsCity,
     selectContentsId,
+    selectContentsHash,
     selectParty
 };

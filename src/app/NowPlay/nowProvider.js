@@ -35,10 +35,9 @@ exports.retrieveContentsById=async function(contentId){
 };
 
 //hashtag로 특정 컨텐츠 파티룸 조회
-exports.retrieveContentsById=async function(hashtagId){
+exports.retrievePartyById=async function(nowcontents_id){
     const connection = await pool.getConnection(async (conn) => conn);
-    const contentListResult=await nowDao.selectParty(connection,hashtagId);
+    const contentListResult=await nowDao.selectParty(connection,nowcontents_id);
     connection.release();
-
-    return contentListResult[0];
+    return contentListResult;
 };

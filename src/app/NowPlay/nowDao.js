@@ -77,15 +77,14 @@ async function selectContentsId(connection,contentId){
 //연결 2개 필요
 //Nowcontent-nowcontent_hashtag
 //nowcontent_hashtag-used_hashtag
-async function selectParty(connection,hashtagId){
-    //다시 설계!
+async function selectParty(connection,nowcontents_id){
     const selectContentsQuery=`
     SELECT partyroom_id
-    FROM nowcontent_hashtag n JOIN used_hashtag u
-    ON n.hashta_id=u.hashtag_id
-    WHRER n.hashtag_id=?
+    FROM NowContents n, nowcontent_hashtag h, used_hashtag p
+    ON n.nowcontents_id=h.nowcontents_id and h.hashtag_id=p.hashtag_id
+    WHRER n.nowcontents_id=?
     `;
-    const [contentRows]=await connection.query(selectContentsQuery,hashtagId);
+    const [contentRows]=await connection.query(selectContentsQuery,nowcontents_id);
     return contentRows;
 }
 module.exports={

@@ -67,5 +67,7 @@ exports.showDetailContents=async function(req,res){
  * [GET] /nowplay/contents/:id/partyrooms
  */
 exports.showPartyRoom=async function(req,res){
-    
+    const contentId=req.params.contentId;
+    const categoryByContentId=await nowProvider.retrievePartyById(contentId);
+    return res.send(response(baseResponse.SUCCESS,categoryByContentId));
 };

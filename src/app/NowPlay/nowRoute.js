@@ -3,12 +3,22 @@ module.exports=function(app){
     
     //0.테스트 API
     app.get('/app/now/test',now.getTest);
+
+    //요즘뭐하니1 PART
     //1.주목 컨텐츠 API [GET]
     app.get('/app/now/highlight',now.showTopContents);
     //2.전체 컨텐츠 API [GET]
     app.get('/app/now/contents',now.showAllContents);
-    //3.컨텐츠 상세정보 API [GET]
+    //3. 행사 종류별로 전체 컨텐츠 API [GET]
+    app.get('/app/now/contents/:category',now.showAllContentsCategory);
+    //4. 지역별로 전체 컨텐츠 API [GET]
+    app.get('/app/now/contents/:city',now.showAllContentsCity);
+
+    //요즘뭐하니2 PART
+    //5. 컨텐츠 상세정보 API [GET]
     app.get('/app/now/contents/:contentId',now.showDetailContents);
-    //4.컨텐츠 파티룸 API [GET]
-    app.get('/app/now/contents/:id/partyrooms',now.showPartyRoom);
+    //6. contentId 특정 컨텐츠의 해시태그 API [GET]
+    app.get('app/now/contents/:contentId/hashtag',now.showHashtag)
+    //6. 컨텐츠 파티룸 API [GET]
+    app.get('/app/now/contents/:contentId/partyrooms',now.showPartyRoom);
 }

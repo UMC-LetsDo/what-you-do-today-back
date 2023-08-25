@@ -34,6 +34,14 @@ module.exports = {
 
     USER_STATUS_EMPTY : { "isSuccess": false, "code": 400, "message": "회원 상태값을 입력해주세요" },
 
+    CONTENT_CONTENTID_EMPTY : { "isSuccess": false, "code": 400, "message": "contentId를 입력해주세요." },
+    CONTENT_CONTENTID_NOT_EXIST : { "isSuccess": false, "code": 404, "message": "해당 컨텐츠가 존재하지 않습니다." },
+    CONTENT_HASHTAGID_NOT_EXIST: { "isSuccess": false, "code": 404, "message": "해당 해시태그와 연관된 컨텐츠가 존재하지 않습니다." },
+
+    HASHTAG_HASHTAGID_EMPTY : { "isSuccess": false, "code": 400, "message": "hashtagId를 입력해주세요." },
+    HASHTAG_HASHTAGID_NOT_EXIST : { "isSuccess": false, "code": 404, "message": "해당 해시태그가 존재하지 않습니다." },
+    HASHTAG_CONTENTID_NOT_EXIST : { "isSuccess": false, "code": 404, "message": "해당 컨텐츠와 연관된 해시태그가 존재하지 않습니다." },
+
     // Response error
     SIGNUP_REDUNDANT_EMAIL : { "isSuccess": false, "code": 400, "message":"중복된 이메일입니다." },
     SIGNUP_REDUNDANT_NICKNAME : { "isSuccess": false, "code": 400, "message":"중복된 닉네임입니다." },
